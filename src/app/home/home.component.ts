@@ -18,11 +18,26 @@ export class HomeComponent {
   // Property to hold the housing locations
   housingLocationList: HousingLocation[] = [];
 
+  filteredLocationList: HousingLocation[] = [];
+
   // Base URL if needed elsewhere
   readonly baseUrl = 'https://angular.dev/assets/images/tutorials/common';
 
   // Use constructor to initialize the housingLocationList from service
   constructor() {
     this.housingLocationList = this.housingService.getAllHousingLocations();
+    this.filteredLocationList = this.housingLocationList;
   }
+
+filterResults(text: string) {
+  if (!text) {
+    this.filteredLocationList = this.housingLocationList;
+    return;
+  }
+
+  this.filteredLocationList = this.housingLocationList.filter((housingLocation) =>
+    housingLocation?.city.toLowerCase().includes(text.toLowerCase())
+  );
+}
+  
 }
